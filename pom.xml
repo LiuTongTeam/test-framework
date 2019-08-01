@@ -126,7 +126,19 @@
             </plugin>
         </plugins>
     </build>
-
+    <!-- 仓库地址 -->
+    <distributionManagement>
+        <repository>
+            <id>nexus-releases</id>
+            <name>nexus-releases</name>
+            <url>http://maven.corp.kofo.io:8081/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>nexus-snapshots</name>
+            <url>http://maven.corp.kofo.io:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
     <repositories>
         <repository>
             <id>nexus-public</id>

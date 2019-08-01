@@ -14,8 +14,7 @@ import java.net.URLConnection;
 import java.security.*;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang.StringUtils;
 @Slf4j
@@ -284,12 +283,40 @@ public class OkHttpClientManager {
         MediaType type = MediaType.parse(contentType);
         RequestBody body = RequestBody.create(type, json);
 
-        Request request = new Request.Builder()
-                .url(url)
-                .addHeader("Cookie",header.get("Cookie"))
-                .post(body)
-                .build();
-        return request;
+        Headers headers  = setHeaders(header);
+
+        if(headers.size() > 0){
+            Request request = new Request.Builder()
+                    .url(url)
+                    .headers(headers)
+                    .post(body)
+                    .build();
+            return request;
+        }else{
+            return null;
+        }
+    }
+
+    /**
+     * 设置请求头
+     * @param headersParams
+     * @return
+     */
+    private Headers setHeaders(Map<String, String> headersParams){
+        Headers headers=null;
+        okhttp3.Headers.Builder headersbuilder=new okhttp3.Headers.Builder();
+        if(headersParams != null)
+        {
+            Iterator<String> iterator = headersParams.keySet().iterator();
+            String key = "";
+            while (iterator.hasNext()) {
+                key = iterator.next().toString();
+                headersbuilder.add(key, headersParams.get(key));
+                log.info("get http", "get_headers==="+key+"===="+headersParams.get(key));
+            }
+        }
+        headers=headersbuilder.build();
+        return headers;
     }
 
 }
