@@ -134,8 +134,7 @@ public class RandomUtil {
         String third = "@chacuo.net";
         return first + second + third;
     }
-/*
     public static void main(String[] args) {
-        System.out.println(getRandomMail());
-    }*/
+        System.out.println(getRandomPhoneNum());
+    }
 }

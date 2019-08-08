@@ -3,9 +3,11 @@ package io.cex.test.framework.common;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
+import io.cex.test.framework.httputil.OkHttpClientManager;
 import lombok.extern.slf4j.Slf4j;
-import java.io.File;
-import java.io.IOException;
+import okhttp3.Response;
+
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -93,5 +95,30 @@ public class FileUtil {
             deleteAllFilesOfDir(files[i]);
         }
         path.delete();
+    }
+
+    /**
+    * @desc 读取http的文件
+    * @param
+    **/
+    public static File getFileFromWeb(String url){
+        File file = new File("./tmp");
+        try {
+            Response response = OkHttpClientManager.getAsyn(url);
+            InputStream inputStream = response.body().byteStream();
+            OutputStream os = new FileOutputStream(file);
+            int bytesRead = 0;
+            byte[] buffer = new byte[8192];
+            while ((bytesRead = inputStream.read(buffer, 0, 8192)) != -1) {
+                os.write(buffer, 0, bytesRead);
+            }
+            os.close();
+            inputStream.close();
+            return file;
+        }catch (IOException e){
+            e.printStackTrace();
+            return file;
+        }
+
     }
 }

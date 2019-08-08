@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.FileNameMap;
@@ -191,6 +192,20 @@ public class OkHttpClientManager {
         return response.body().string();
     }
 
+    /**
+    * @desc 同步上传文件post请求，带content-type,header
+    * @param
+    **/
+    private Response _post(String url, String json, String contentType, HashMap<String, String> header, File file,String filename) throws IOException{
+        Request request = buildPostFileRequest(url,json,contentType,header,file,filename);
+        Response response = mOkHttpClient.newCall(request).execute();
+        return response;
+    }
+    private String _postAsString(String url, String json, String contentType, HashMap<String, String> header, File file,String filename) throws IOException{
+        Response response = _post(url, json, contentType,header,file,filename);
+        return response.body().string();
+    }
+
     public static Response getAsyn(String url) throws IOException {
         return getInstance()._getAsyn(url);
     }
@@ -203,9 +218,9 @@ public class OkHttpClientManager {
         return getInstance(timeoutMs)._getAsString(url);
     }
 
-    public static Response post(String url, String json) throws IOException {
+/*    public static Response post(String s1, String s, String url, HashMap header, File file, String json) throws IOException {
         return getInstance()._post(url, json);
-    }
+    }*/
 
     public static String postAsString(String url, String json) throws IOException {
         return getInstance()._postAsString(url, json);
@@ -223,6 +238,13 @@ public class OkHttpClientManager {
 
     public static String postAsString(String url, String json, String contentType,HashMap<String, String> header) throws IOException {
         return getInstance()._postAsString(url, json, contentType,header);
+    }
+
+    public static String postAsString(String url, String json, String contentType, HashMap<String, String> header, File file,String filename) throws IOException{
+        return  getInstance()._postAsString(url, json, contentType,header,file,filename);
+    }
+    public static Response post(String url, String json, String contentType, HashMap<String, String> header, File file,String filename) throws IOException {
+        return getInstance()._post(url, json, contentType,header,file,filename);
     }
 
     /**
@@ -284,7 +306,30 @@ public class OkHttpClientManager {
         RequestBody body = RequestBody.create(type, json);
 
         Headers headers  = setHeaders(header);
+        if(headers.size() > 0){
+            Request request = new Request.Builder()
+                    .url(url)
+                    .headers(headers)
+                    .post(body)
+                    .build();
+            return request;
+        }else{
+            return null;
+        }
+    }
 
+
+    private Request buildPostFileRequest(String url, String json, String contentType, HashMap<String, String> header, File file,String filename){
+        if (StringUtils.isBlank(json)) {
+            log.error(json + " is blank");
+            return null;
+        }
+        MediaType type = MediaType.parse(contentType);
+        MultipartBody.Builder builder=new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("file", filename, RequestBody.create(type, file));
+        RequestBody body = builder.build();
+        Headers headers  = setHeaders(header);
         if(headers.size() > 0){
             Request request = new Request.Builder()
                     .url(url)
