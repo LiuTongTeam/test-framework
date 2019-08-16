@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Properties;
 
@@ -214,7 +215,18 @@ public class StringUtil {
 
 
     }
+    //数字型string取整
+    public static String numStringRound(String num){
+        try {
+            BigDecimal bigNum = new BigDecimal(num);
+            BigDecimal newNumber = bigNum.setScale(0, BigDecimal.ROUND_DOWN);
+            return newNumber.toString();
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
 
+    }
 
 }
 
