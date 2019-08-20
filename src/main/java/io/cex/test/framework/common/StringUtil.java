@@ -227,6 +227,15 @@ public class StringUtil {
         }
 
     }
-
+    public static String stripTrailingZeros(String num){
+        try {
+            BigDecimal bigNum = new BigDecimal(num);
+            BigDecimal newNumber = bigNum.stripTrailingZeros();
+            return newNumber.toString();
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
 
