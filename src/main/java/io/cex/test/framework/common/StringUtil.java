@@ -231,7 +231,7 @@ public class StringUtil {
         try {
             BigDecimal bigNum = new BigDecimal(num);
             BigDecimal newNumber = bigNum.stripTrailingZeros();
-            return newNumber.toString();
+            return newNumber.toPlainString();
         }catch (Exception e){
             e.printStackTrace();
             return null;
