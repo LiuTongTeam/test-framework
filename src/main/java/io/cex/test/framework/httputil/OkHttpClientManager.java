@@ -126,7 +126,28 @@ public class OkHttpClientManager {
         return execute.body().string();
     }
 
+    /**
+     * 同步的Get请求,带请求头
+     *
+     * @param url
+     * @param header
+     * @return Response
+     */
+    private Response _getAsyn(String url,HashMap header) throws IOException {
+        Headers headers  = setHeaders(header);
+        final Request request = new Request.Builder()
+                .url(url)
+                .headers(headers)
+                .build();
+        Call call = mOkHttpClient.newCall(request);
+        Response execute = call.execute();
+        return execute;
+    }
 
+    private String _getAsString(String url,HashMap header) throws IOException {
+        Response execute = _getAsyn(url,header);
+        return execute.body().string();
+    }
     /**
      * 同步的Post请求,默认application/json
      *
@@ -218,9 +239,13 @@ public class OkHttpClientManager {
         return getInstance(timeoutMs)._getAsString(url);
     }
 
-/*    public static Response post(String s1, String s, String url, HashMap header, File file, String json) throws IOException {
-        return getInstance()._post(url, json);
-    }*/
+    public static Response get(String url,HashMap header) throws IOException {
+        return getInstance()._getAsyn(url,header);
+    }
+
+    public static String getAsString(String url,HashMap header) throws IOException {
+        return getInstance()._getAsString(url,header);
+    }
 
     public static String postAsString(String url, String json) throws IOException {
         return getInstance()._postAsString(url, json);
