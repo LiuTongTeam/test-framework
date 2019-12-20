@@ -1,11 +1,10 @@
 package io.cex.test.framework.ui;
 
+import io.qameta.allure.Attachment;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,7 +13,6 @@ import java.util.NoSuchElementException;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-//import static io.cex.test.framework.ui.APPBaseCase.driver;
 
 /**
  * @Classname ElementUtil
@@ -24,11 +22,16 @@ import static java.util.concurrent.TimeUnit.SECONDS;
  */
 @Slf4j
 public class ElementUtil {
-    private static WebDriver driver = null;
+    private static WebDriver driver;
+
     public ElementUtil(WebDriver driver) {
         this.driver = driver;
     }
-
+/*    @Attachment(value = "失败截图如下：",type = "image/png")
+    public byte[]  takePhoto(WebDriver driver){
+        byte[] screenshotAs = ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
+        return screenshotAs;
+    }*/
     public static ArrayList<Exception> noSuchElementExceptions=new ArrayList<Exception>();
 
     /**
@@ -38,11 +41,6 @@ public class ElementUtil {
      */
     public List<WebElement> findElements(final Locator locator)
     {
-
-        /**
-         * 查找某个元素等待几秒
-         */
-        //Waitformax(Integer.valueOf(locator.getWaitSec()));
         List<WebElement>  webElements=null;
         try {
             webElements=( new FluentWait<>(driver).withTimeout(20, SECONDS).pollingEvery(5, SECONDS).ignoring(NoSuchElementException.class)).until(
@@ -57,21 +55,20 @@ public class ElementUtil {
                     });
             return webElements;
         } catch (NoSuchElementException e) {
-            // TODO: handle exception
-            log.info("无法定位页面元素");
+            Date nowDate=new Date();
+            log.info("----------------无法定位页面元素"+formatDate(nowDate));
             e.printStackTrace();
             noSuchElementExceptions.add(e);
-            Date nowDate=new Date();
-            log.info(formatDate(nowDate));
+//            takePhoto(driver);
             return webElements;
         }
         catch (TimeoutException | ElementNotVisibleException e) {
-            // TODO: handle exception
-            log.info("查找页面元素超时");
-            e.printStackTrace();
-            noSuchElementExceptions.add(e);
             Date nowDate=new Date();
-            log.info(formatDate(nowDate));
+            log.info("------------------查找页面元素超时"+formatDate(nowDate));
+            e.printStackTrace();
+            //截图
+//            takePhoto(driver);
+            noSuchElementExceptions.add(e);
             return webElements;
         }
     }
@@ -89,7 +86,6 @@ public class ElementUtil {
 
                         @Override
                         public WebElement apply(WebDriver driver) {
-                            // TODO 自动生成的方法存根
                             WebElement element=null;
                             element=getElement(locator);
                             return element;
@@ -97,32 +93,21 @@ public class ElementUtil {
                     });
             return webElement;
         } catch (NoSuchElementException e) {
-            // TODO: handle exception
-            log.info("无法定位页面元素");
+            Date nowDate=new Date();
+            log.info("----------------无法定位页面元素"+formatDate(nowDate));
             e.printStackTrace();
             noSuchElementExceptions.add(e);
-            //设置截图名字
-            Date nowDate=new Date();
-            //展示报表截图
-            log.info(formatDate(nowDate));
+            //设置截图
+//            takePhoto(driver);
             return webElement;
         }
-        catch (TimeoutException e) {
-            // TODO: handle exception
-            log.info("超时无法定位页面元素");
-            e.printStackTrace();
-            noSuchElementExceptions.add(e);
-            //设置截图名字
+        catch (TimeoutException |ElementNotVisibleException e) {
             Date nowDate=new Date();
-            //展示报表截图
-            log.info(formatDate(nowDate));
-            return webElement;
-        }
-        catch (ElementNotVisibleException e) {
-            // TODO: handle exception
-            log.info("超时无法定位页面元素");
+            log.info("--------------超时无法定位页面元素"+formatDate(nowDate));
             e.printStackTrace();
             noSuchElementExceptions.add(e);
+            //设置截图
+//            takePhoto(driver);
             return webElement;
         }
     }

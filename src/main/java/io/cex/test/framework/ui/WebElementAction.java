@@ -16,12 +16,7 @@ import java.util.NoSuchElementException;
  */
 @Slf4j
 public class WebElementAction extends WebBaseCase{
-    private  WebDriver webDriver;
-    private ElementUtil elementUtil = null;
-    public WebElementAction(WebDriver webDriver) {
-        this.webDriver = webDriver;
-        elementUtil = new ElementUtil(webDriver);
-    }
+    private ElementUtil elementUtil = new ElementUtil(webDriver);
 
     /**
      * 元素click操作
