@@ -101,8 +101,8 @@ public class FileUtil {
     * @desc 读取http的文件
     * @param
     **/
-    public static File getFileFromWeb(String url){
-        File file = new File("./tmp");
+    public static File getFileFromWeb(String url,String name){
+        File file = new File("./tmp"+name);
         try {
             Response response = OkHttpClientManager.getAsyn(url);
             InputStream inputStream = response.body().byteStream();
