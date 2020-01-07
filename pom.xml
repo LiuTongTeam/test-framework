@@ -74,18 +74,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.uncommons</groupId>
-            <artifactId>reportng</artifactId>
-            <version>1.1.4</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.testng</groupId>
-                    <artifactId>testng</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.37</version>
@@ -237,52 +225,69 @@
     </build>
 
     <!-- 仓库地址 -->
+<!--    <distributionManagement>-->
+<!--        <repository>-->
+<!--            <id>nexus-releases</id>-->
+<!--            <name>nexus-releases</name>-->
+<!--            <url>http://maven.corp.kofo.io:8081/repository/maven-releases/</url>-->
+<!--        </repository>-->
+<!--        <snapshotRepository>-->
+<!--            <id>nexus-snapshots</id>-->
+<!--            <name>nexus-snapshots</name>-->
+<!--            <url>http://maven.corp.kofo.io:8081/repository/maven-snapshots/</url>-->
+<!--        </snapshotRepository>-->
+<!--    </distributionManagement>-->
+<!--    <repositories>-->
+<!--        <repository>-->
+<!--            <id>nexus-public</id>-->
+<!--            <name>nexus-public</name>-->
+<!--            <url>http://maven.corp.kofo.io:8081/repository/maven-public/</url>-->
+<!--            <releases>-->
+<!--                <enabled>true</enabled>-->
+<!--            </releases>-->
+<!--            <snapshots>-->
+<!--                <enabled>false</enabled>-->
+<!--            </snapshots>-->
+<!--        </repository>-->
+<!--        <repository>-->
+<!--            <id>nexus-releases</id>-->
+<!--            <name>nexus-releases</name>-->
+<!--            <url>http://maven.corp.kofo.io:8081/repository/maven-releases/</url>-->
+<!--            <releases>-->
+<!--                <enabled>true</enabled>-->
+<!--            </releases>-->
+<!--            <snapshots>-->
+<!--                <enabled>false</enabled>-->
+<!--            </snapshots>-->
+<!--        </repository>-->
+<!--        <repository>-->
+<!--            <id>nexus-snapshots</id>-->
+<!--            <name>nexus-snapshots</name>-->
+<!--            <url>http://maven.corp.kofo.io:8081/repository/maven-snapshots/</url>-->
+<!--            <releases>-->
+<!--                <enabled>false</enabled>-->
+<!--            </releases>-->
+<!--            <snapshots>-->
+<!--                <enabled>true</enabled>-->
+<!--                <updatePolicy>always</updatePolicy>-->
+<!--            </snapshots>-->
+<!--        </repository>-->
+<!--    </repositories>-->
     <distributionManagement>
+<!--        <repository>-->
+<!--            <id>nexus-releases</id>-->
+<!--            <name>nexus-releases</name>-->
+<!--            <url>http://localhost:8081/repository/maven-releases/</url>-->
+<!--        </repository>-->
+<!--        <snapshotRepository>-->
+<!--            <id>nexus-snapshots</id>-->
+<!--            <name>nexus-snapshots</name>-->
+<!--            <url>http://localhost:8081/repository/maven-snapshots/</url>-->
+<!--        </snapshotRepository>-->
         <repository>
-            <id>nexus-releases</id>
-            <name>nexus-releases</name>
-            <url>http://maven.corp.kofo.io:8081/repository/maven-releases/</url>
+            <id>github</id>
+            <name>atongPackages</name>
+            <url>https://maven.pkg.github.com/LiuTongTeam/test-framework</url>
         </repository>
-        <snapshotRepository>
-            <id>nexus-snapshots</id>
-            <name>nexus-snapshots</name>
-            <url>http://maven.corp.kofo.io:8081/repository/maven-snapshots/</url>
-        </snapshotRepository>
     </distributionManagement>
-    <repositories>
-        <repository>
-            <id>nexus-public</id>
-            <name>nexus-public</name>
-            <url>http://maven.corp.kofo.io:8081/repository/maven-public/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>nexus-releases</id>
-            <name>nexus-releases</name>
-            <url>http://maven.corp.kofo.io:8081/repository/maven-releases/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>nexus-snapshots</id>
-            <name>nexus-snapshots</name>
-            <url>http://maven.corp.kofo.io:8081/repository/maven-snapshots/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
-    </repositories>
 </project>

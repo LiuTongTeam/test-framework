@@ -6,6 +6,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.*;
 
+import java.net.URL;
+
 
 /**
  * @Classname WebBaseCase
@@ -30,10 +32,14 @@ public class WebBaseCase {
     }
     @BeforeSuite
     public void initData(){
-        System.setProperty("webdriver.chrome.driver", "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chromedriver.exe");
+        URL url = WebBaseCase.class.getResource("/chromedriver");
+        String driverUrl= url.getPath();
+        System.setProperty("webdriver.chrome.driver", driverUrl);
+        System.out.println("hahaha");
+       // System.setProperty("webdriver.chrome.driver", "./src/main/resources/chromedriver");
         webDriver = initDriver("chrome");
-/*        System.setProperty("webdriver.gecko.driver","C:\\tools\\geckodriver-v0.26.0-win64\\geckodriver.exe");
-        webDriver = initDriver("firefox");*/
+//       System.setProperty("webdriver.gecko.driver","C:\\tools\\geckodriver-v0.26.0-win64\\geckodriver.exe");
+//        webDriver = initDriver("firefox");
     }
 
     @AfterSuite
