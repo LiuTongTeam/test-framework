@@ -545,6 +545,19 @@ public class AssertTool extends Assert{
             fail("----Assert failed:SQL result contains key-value of expect json");
         }
     }
+    /**
+     * @desc 判断传传入的实际的布尔变量是否等于期望的布尔变量值
+     * @param expect 期望值
+     * @param actual 实际值
+     **/
+    public static void isBooleanEqual(boolean expect,boolean actual){
+        if (expect==actual){
+            log.info("The actual is equal The expect");
+        }else{
+            fail("Assert failed: The actual is not equal The expect ");
+        }
+
+    }
 
     /**
      * @desc 格式化异常信息
